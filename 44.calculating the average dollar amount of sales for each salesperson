@@ -1,0 +1,42 @@
+#include <stdio.h>
+
+#define SALESPERSONS 10
+#define DAYS 7
+
+int main() {
+    float sales[SALESPERSONS][DAYS];  // 2D array to store sales for each salesperson for each day
+    float totalSalesperson[SALESPERSONS] = {0};  // Total sales for each salesperson
+    float totalDay[DAYS] = {0};  // Total sales for each day
+    float totalWeek = 0;  // Total sales for the week
+
+    // Input sales data for each salesperson for each day
+    for (int salesperson = 0; salesperson < SALESPERSONS; salesperson++) {
+        printf("Enter sales data for Salesperson %d:\n", salesperson + 1);
+        for (int day = 0; day < DAYS; day++) {
+            printf("Day %d: ", day + 1);
+            scanf("%f", &sales[salesperson][day]);
+            totalSalesperson[salesperson] += sales[salesperson][day];  // Sum sales for each salesperson
+            totalDay[day] += sales[salesperson][day];  // Sum sales for each day
+        }
+        printf("\n");
+    }
+
+    // Calculate and display average sales for each salesperson (assuming 5 working days)
+    printf("Average sales per salesperson for the week:\n");
+    for (int salesperson = 0; salesperson < SALESPERSONS; salesperson++) {
+        float averageSales = totalSalesperson[salesperson] / 5;  // Salesperson works 5 days
+        printf("Salesperson %d: %.2f\n", salesperson + 1, averageSales);
+    }
+
+    // Calculate total sales for the week
+    printf("\nTotal sales for each day:\n");
+    for (int day = 0; day < DAYS; day++) {
+        printf("Day %d: %.2f\n", day + 1, totalDay[day]);
+        totalWeek += totalDay[day];  // Sum the sales for the entire week
+    }
+
+    // Display total sales for the week
+    printf("\nTotal sales for the week: %.2f\n", totalWeek);
+
+    return 0;
+}
