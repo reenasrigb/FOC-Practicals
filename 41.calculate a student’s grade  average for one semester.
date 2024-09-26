@@ -1,0 +1,53 @@
+#include <stdio.h>
+
+// Function to convert letter grade to grade points
+int gradeToPoints(char letterGrade) {
+    switch(letterGrade) {
+        case 'A': return 4;
+        case 'B': return 3;
+        case 'C': return 2;
+        case 'D': return 1;
+        case 'F': return 0;
+        default: return -1; // Invalid grade
+    }
+}
+
+int main() {
+    int numCourses;
+    int totalGradePoints = 0;
+    char letterGrade;
+    
+    // Input number of courses
+    printf("Enter the number of courses: ");
+    scanf("%d", &numCourses);
+    
+    // Check for valid number of courses
+    if (numCourses <= 0) {
+        printf("Invalid number of courses.\n");
+        return 1;
+    }
+    
+    // Loop through each course to get the letter grade
+    for (int i = 0; i < numCourses; i++) {
+        printf("Enter the letter grade for course %d (A/B/C/D/F): ", i + 1);
+        scanf(" %c", &letterGrade); // The space before %c ensures leading spaces are ignored
+        
+        int points = gradeToPoints(letterGrade);
+        
+        // Check for valid letter grade
+        if (points == -1) {
+            printf("Invalid grade entered. Please enter A, B, C, D, or F.\n");
+            return 1; // Exit if invalid input
+        }
+        
+        totalGradePoints += points;
+    }
+    
+    // Calculate the grade average
+    double gradeAverage = (double) totalGradePoints / numCourses;
+    
+    // Print the grade average
+    printf("The grade average is: %.2f\n", gradeAverage);
+    
+    return 0;
+}
