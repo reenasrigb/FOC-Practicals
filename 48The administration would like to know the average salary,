@@ -1,0 +1,95 @@
+#include <stdio.h>
+#include <string.h>
+
+#define RESPONDENTS 95
+
+// Function to calculate the average salary based on two criteria
+float CalculateAverageSalary(int age[], char gender[], char maritalStatus[], char major[], float salary[], const char *criteria1, const char *value1, const char *criteria2, const char *value2) {
+    float totalSalary = 0;
+    int count = 0;
+
+    for (int i = 0; i < RESPONDENTS; i++) {
+        int matchesFirst = 0;
+        int matchesSecond = 0;
+
+        // Check first criteria
+        if (strcmp(criteria1, "gender") == 0 && strcmp(gender[i], value1) == 0) {
+            matchesFirst = 1;
+        } else if (strcmp(criteria1, "maritalStatus") == 0 && strcmp(maritalStatus[i], value1) == 0) {
+            matchesFirst = 1;
+        } else if (strcmp(criteria1, "major") == 0 && strcmp(major[i], value1) == 0) {
+            matchesFirst = 1;
+        } else if (strcmp(criteria1, "age") == 0 && age[i] == atoi(value1)) {
+            matchesFirst = 1;
+        }
+
+        // Check second criteria
+        if (strcmp(criteria2, "gender") == 0 && strcmp(gender[i], value2) == 0) {
+            matchesSecond = 1;
+        } else if (strcmp(criteria2, "maritalStatus") == 0 && strcmp(maritalStatus[i], value2) == 0) {
+            matchesSecond = 1;
+        } else if (strcmp(criteria2, "major") == 0 && strcmp(major[i], value2) == 0) {
+            matchesSecond = 1;
+        } else if (strcmp(criteria2, "age") == 0 && age[i] == atoi(value2)) {
+            matchesSecond = 1;
+        }
+
+        // If both criteria match, include the salary
+        if (matchesFirst && matchesSecond) {
+            totalSalary += salary[i];
+            count++;
+        }
+    }
+
+    // Avoid division by zero
+    if (count > 0) {
+        return totalSalary / count;
+    } else {
+        return 0; // No valid responses
+    }
+}
+
+int main() {
+    int age[RESPONDENTS];
+    char gender[RESPONDENTS][10]; // Assuming "M" or "F"
+    char maritalStatus[RESPONDENTS][10]; // "Single" or "Married"
+    char major[RESPONDENTS][50]; // College major
+    float salary[RESPONDENTS];
+
+    // Input data
+    for (int i = 0; i < RESPONDENTS; i++) {
+        printf("Enter age for respondent %d: ", i + 1);
+        scanf("%d", &age[i]);
+        printf("Enter gender (M/F) for respondent %d: ", i + 1);
+        scanf("%s", gender[i]);
+        printf("Enter marital status (Single/Married) for respondent %d: ", i + 1);
+        scanf("%s", maritalStatus[i]);
+        printf("Enter major for respondent %d: ", i + 1);
+        scanf("%s", major[i]);
+        printf("Enter salary for respondent %d: ", i + 1);
+        scanf("%f", &salary[i]);
+    }
+
+    // Get user input for criteria
+    char criteria1[20], value1[20], criteria2[20], value2[20];
+    printf("Enter first criteria (gender/maritalStatus/major/age): ");
+    scanf("%s", criteria1);
+    printf("Enter value for first criteria: ");
+    scanf("%s", value1);
+    printf("Enter second criteria (gender/maritalStatus/major/age): ");
+    scanf("%s", criteria2);
+    printf("Enter value for second criteria: ");
+    scanf("%s", value2);
+
+    // Calculate average salary
+    float averageSalary = CalculateAverageSalary(age, gender, maritalStatus, major, salary, criteria1, value1, criteria2, value2);
+
+    // Output result
+    if (averageSalary > 0) {
+        printf("The average salary for the selected criteria is: %.2f\n", averageSalary);
+    } else {
+        printf("No valid responses found for the selected criteria.\n");
+    }
+
+    return 0;
+}
