@@ -1,0 +1,81 @@
+#include <stdio.h>
+
+#define MAX_STUDENTS 35
+#define NUM_QUESTIONS 20
+
+// Function to assign grade based on the student's score and best score
+char assignGrade(int score, int bestScore) {
+    if (score >= bestScore - 2) {
+        return 'A';
+    } else if (score >= bestScore - 4) {
+        return 'B';
+    } else if (score >= bestScore - 6) {
+        return 'C';
+    } else if (score >= bestScore - 8) {
+        return 'D';
+    } else {
+        return 'F';
+    }
+}
+
+int main() {
+    int studentIDs[MAX_STUDENTS];
+    int studentScores[MAX_STUDENTS];
+    char studentGrades[MAX_STUDENTS];
+    char correctAnswers[NUM_QUESTIONS];
+    char studentAnswers[NUM_QUESTIONS];
+    int numStudents, i, j;
+    int bestScore = 0;
+
+    // Input correct answers for the test
+    printf("Enter the correct answers for the test (T/F):\n");
+    for (i = 0; i < NUM_QUESTIONS; i++) {
+        printf("Question %d: ", i + 1);
+        scanf(" %c", &correctAnswers[i]); // Space before %c to skip any white space
+    }
+
+    // Input number of students
+    printf("Enter the number of students (max 35): ");
+    scanf("%d", &numStudents);
+
+    // Input student IDs and their answers, and calculate scores
+    for (i = 0; i < numStudents; i++) {
+        printf("\nEnter Student ID for student %d: ", i + 1);
+        scanf("%d", &studentIDs[i]);
+
+        int score = 0;
+
+        printf("Enter answers for student %d (T/F):\n", i + 1);
+        for (j = 0; j < NUM_QUESTIONS; j++) {
+            printf("Answer for question %d: ", j + 1);
+            scanf(" %c", &studentAnswers[j]);
+            
+            if (studentAnswers[j] == correctAnswers[j]) {
+                score++;
+            }
+        }
+
+        studentScores[i] = score;
+
+        // Determine if this is the best score so far
+        if (score > bestScore) {
+            bestScore = score;
+        }
+    }
+
+    // Assign grades based on the best score
+    for (i = 0; i < numStudents; i++) {
+        studentGrades[i] = assignGrade(studentScores[i], bestScore);
+    }
+
+    // Output results
+    printf("\nStudent Results:\n");
+    for (i = 0; i < numStudents; i++) {
+        printf("Student ID: %d, Score: %d, Grade: %c\n", studentIDs[i], studentScores[i], studentGrades[i]);
+    }
+
+    // Output the highest score in the class
+    printf("\nThe highest score in the class is: %d\n", bestScore);
+
+    return 0;
+}
