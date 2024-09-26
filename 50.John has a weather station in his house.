@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <limits.h>
+
+#define DAYS 14
+
+int main() {
+    float windSpeeds[DAYS];
+    float highestSpeed = 0.0, lowestSpeed = INT_MAX;
+    float totalSpeed = 0.0, averageSpeed;
+    int highestDay = 0, lowestDay = 0;
+
+    // Input wind speed data
+    for (int i = 0; i < DAYS; i++) {
+        printf("Enter wind speed for day %d: ", i + 1);
+        scanf("%f", &windSpeeds[i]);
+        totalSpeed += windSpeeds[i];
+
+        // Determine highest and lowest wind speeds
+        if (windSpeeds[i] > highestSpeed) {
+            highestSpeed = windSpeeds[i];
+            highestDay = i + 1; // Store day number (1-based)
+        }
+        if (windSpeeds[i] < lowestSpeed) {
+            lowestSpeed = windSpeeds[i];
+            lowestDay = i + 1; // Store day number (1-based)
+        }
+    }
+
+    // Calculate average wind speed
+    averageSpeed = totalSpeed / DAYS;
+
+    // Output results
+    printf("\nAverage wind speed over two weeks: %.2f\n", averageSpeed);
+    printf("Highest wind speed recorded on day %d: %.2f\n", highestDay, highestSpeed);
+    printf("Lowest wind speed recorded on day %d: %.2f\n", lowestDay, lowestSpeed);
+
+    printf("Differences between highest speed and each day's speed:\n");
+    for (int i = 0; i < DAYS; i++) {
+        float difference = highestSpeed - windSpeeds[i];
+        printf("Day %d: Difference = %.2f\n", i + 1, difference);
+    }
+
+    return 0;
+}
