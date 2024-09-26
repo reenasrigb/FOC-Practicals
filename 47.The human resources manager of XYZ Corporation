@@ -1,0 +1,79 @@
+#include <stdio.h>
+
+#define DEPARTMENTS 12
+
+int main() {
+    char departments[DEPARTMENTS][50]; // Array to hold department names
+    int employeeCount[DEPARTMENTS] = {0}; // Total employees in each department
+    int maleCount[DEPARTMENTS] = {0}; // Number of men in each department
+    int femaleCount[DEPARTMENTS] = {0}; // Number of women in each department
+    float maleWages[DEPARTMENTS] = {0}; // Total wages of men in each department
+    float femaleWages[DEPARTMENTS] = {0}; // Total wages of women in each department
+    int maleAges[DEPARTMENTS] = {0}; // Total ages of men in each department
+    int femaleAges[DEPARTMENTS] = {0}; // Total ages of women in each department
+    int totalEmployees;
+    
+    // Input department names
+    for (int i = 0; i < DEPARTMENTS; i++) {
+        printf("Enter department name for department %d: ", i + 1);
+        scanf("%s", departments[i]);
+    }
+
+    // Input employee data
+    printf("Enter the total number of employees: ");
+    scanf("%d", &totalEmployees);
+
+    for (int i = 0; i < totalEmployees; i++) {
+        int deptNumber;
+        char gender;
+        int age;
+        float wage;
+
+        printf("Enter department number (1-12): ");
+        scanf("%d", &deptNumber);
+        printf("Enter gender (M/F): ");
+        scanf(" %c", &gender); // Space before %c to consume newline
+        printf("Enter age: ");
+        scanf("%d", &age);
+        printf("Enter wage: ");
+        scanf("%f", &wage);
+        
+        // Update department statistics
+        employeeCount[deptNumber - 1]++;
+        if (gender == 'M' || gender == 'm') {
+            maleCount[deptNumber - 1]++;
+            maleWages[deptNumber - 1] += wage;
+            maleAges[deptNumber - 1] += age;
+        } else if (gender == 'F' || gender == 'f') {
+            femaleCount[deptNumber - 1]++;
+            femaleWages[deptNumber - 1] += wage;
+            femaleAges[deptNumber - 1] += age;
+        }
+    }
+
+    // Output results
+    printf("\nWages comparison:\n");
+    for (int i = 0; i < DEPARTMENTS; i++) {
+        printf("Department: %s\n", departments[i]);
+        printf("Total Male Wages: %.2f\n", maleWages[i]);
+        printf("Total Female Wages: %.2f\n", femaleWages[i]);
+    }
+
+    printf("\nEmployee distribution:\n");
+    for (int i = 0; i < DEPARTMENTS; i++) {
+        printf("Department: %s\n", departments[i]);
+        printf("Total Employees: %d\n", employeeCount[i]);
+        printf("Men: %d\n", maleCount[i]);
+        printf("Women: %d\n", femaleCount[i]);
+        
+        // Calculate and print average ages
+        if (maleCount[i] > 0) {
+            printf("Average Male Age: %.2f\n", (float)maleAges[i] / maleCount[i]);
+        }
+        if (femaleCount[i] > 0) {
+            printf("Average Female Age: %.2f\n", (float)femaleAges[i] / femaleCount[i]);
+        }
+    }
+
+    return 0;
+}
