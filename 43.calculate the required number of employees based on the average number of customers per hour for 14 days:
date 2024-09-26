@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <math.h> // For the ceil() function to round up
+
+#define HOURS_IN_DAY 24
+#define DAYS 14
+
+int main() {
+    int customerCount[HOURS_IN_DAY] = {0};  // To store the sum of customers for each hour
+    int totalCustomers;
+    int requiredEmployees[HOURS_IN_DAY];
+    double averageCustomers[HOURS_IN_DAY];
+
+    // Input customer data for each hour over 14 days
+    for (int day = 0; day < DAYS; day++) {
+        printf("Day %d\n", day + 1);
+        for (int hour = 0; hour < HOURS_IN_DAY; hour++) {
+            int customers;
+            printf("Enter number of customers for hour %d: ", hour);
+            scanf("%d", &customers);
+            customerCount[hour] += customers;  // Add customers to the total count for that hour
+        }
+        printf("\n");
+    }
+
+    // Calculate the average number of customers for each hour
+    for (int hour = 0; hour < HOURS_IN_DAY; hour++) {
+        averageCustomers[hour] = (double)customerCount[hour] / DAYS;
+    }
+
+    // Calculate the required number of employees for each hour
+    for (int hour = 0; hour < HOURS_IN_DAY; hour++) {
+        // Minimum 3 employees, add 1 employee for every 20 customers
+        requiredEmployees[hour] = 3 + (int)ceil(averageCustomers[hour] / 20);
+    }
+
+    // Output the number of employees needed for each hour
+    printf("Employees needed per hour:\n");
+    for (int hour = 0; hour < HOURS_IN_DAY; hour++) {
+        printf("Hour %d: %d employees\n", hour, requiredEmployees[hour]);
+    }
+
+    return 0;
+}
