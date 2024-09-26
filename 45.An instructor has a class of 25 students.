@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+#define STUDENTS 25
+#define TESTS 5  // Assuming there are 5 tests for each student
+
+int main() {
+    float grades[STUDENTS][TESTS];  // 2D array to store grades
+    int studentNumber, testNumber;
+
+    // Input grades for each student for each test
+    for (int student = 0; student < STUDENTS; student++) {
+        printf("Enter grades for Student %d:\n", student + 1);
+        for (int test = 0; test < TESTS; test++) {
+            printf("Test %d: ", test + 1);
+            scanf("%f", &grades[student][test]);
+        }
+        printf("\n");
+    }
+
+    // Input student number and test number
+    printf("Enter student number (1-25): ");
+    scanf("%d", &studentNumber);
+    
+    printf("Enter test number (1-%d): ", TESTS);
+    scanf("%d", &testNumber);
+
+    // Check if input is valid
+    if (studentNumber >= 1 && studentNumber <= 25 && testNumber >= 1 && testNumber <= TESTS) {
+        // Output the grade for the specified student and test
+        printf("Grade for Student %d on Test %d is: %.2f\n", studentNumber, testNumber, grades[studentNumber - 1][testNumber - 1]);
+    } else {
+        printf("Invalid student number or test number.\n");
+    }
+
+    return 0;
+}
