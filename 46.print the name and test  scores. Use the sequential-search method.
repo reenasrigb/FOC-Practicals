@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+
+#define SIZE 5  // Define the number of students
+
+int main() {
+    char names[SIZE][50];  // Array to store student names
+    float grades[SIZE][4]; // Array to store test scores
+    char searchName[50];   // Name to search for
+    int found = 0;         // Flag to indicate if the student is found
+
+    // Input data for names and grades
+    for (int i = 0; i < SIZE; i++) {
+        printf("Enter name for student %d: ", i + 1);
+        scanf("%s", names[i]);
+        for (int j = 0; j < 4; j++) {
+            printf("Enter score for Test %d: ", j + 1);
+            scanf("%f", &grades[i][j]);
+        }
+        printf("\n");
+    }
+
+    // Input the student name to search
+    printf("Enter student name to search: ");
+    scanf("%s", searchName);
+
+    // Sequential search
+    for (int i = 0; i < SIZE; i++) {
+        if (strcmp(names[i], searchName) == 0) {
+            found = 1;
+            printf("Student Name: %s\n", names[i]);
+            printf("Test Scores:\n");
+            for (int j = 0; j < 4; j++) {
+                printf("Test %d: %.2f\n", j + 1, grades[i][j]);
+            }
+            break; // Exit loop if student is found
+        }
+    }
+
+    // If student is not found
+    if (!found) {
+        printf("Student not found.\n");
+    }
+
+    return 0;
+}
